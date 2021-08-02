@@ -1,0 +1,43 @@
+<?php
+/**
+ *
+ */
+
+use Drupal\Core\Entity\EntityInterface;
+
+/**
+ * @param $entity_type_manager
+ * @param $entity
+ * @param $fields
+ * @param $delta
+ */
+function computed_field_partner_id_compute($entity_type_manager, $entity, $fields, $delta) {
+  if(!empty($fields['partner_id'][0]['value'])) {
+    //return $fields['partner_id'][0]['value'];
+  }
+  else {
+    $bundle = $entity->bundle();
+    $string = strtoupper($bundle) . "[current-date:custom:ym][auto:increment:{$bundle}:%'04s]";
+    //return \Drupal::token()->replace($string);
+  }
+  return NULL;
+}
+
+/**
+ *
+ */
+function fms_options_list_alter(&$options, &$context) {
+  $fieldDefinition = $context['fieldDefinition'];
+  $target_type = $fieldDefinition->getSetting('target_type');
+  if ($target_type && count($options)) {
+    foreach ($options as $id => $label) {
+      if(!empty($id) && $id !== '_none') {
+        /** @var EntityInterface $entity */
+        $entity = \Drupal::entityTypeManager()->getStorage($target_type)->load($id);
+        if (!$entity->access('view')) {
+          unset($options[$id]);
+        }
+      }
+    }
+  }
+}
