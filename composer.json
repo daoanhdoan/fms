@@ -1,9 +1,12 @@
 {
-  "name": "daoanhdoan/fms",
-  "description": "Forwarder Management System",
-  "type": "drupal-custom-module",
-  "license":"GPL-2.0",
-  "extra": {
-    "installer-name": "fms"
-  }
+    "name" : "daoanhdoan/fms",
+    "description": "Forwarder Management System",
+    "type" : "drupal-custom-module",
+    "license": "GPL-2.0",
+    "extra": {
+        "installer-name": "fms"
+    },
+    "require": {
+        
+    }
 }
